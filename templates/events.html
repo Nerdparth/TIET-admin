@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Module - Smart-Campus Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-16 bg-white shadow-md">
+            <nav class="flex flex-col items-center py-4 space-y-4">
+                <button class="w-12 h-12 rounded-lg hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <a href="{% url 'dashboard' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </a>
+                <a href="{% url 'events' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </a>
+                <a href="{% url 'settings' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <i class="bx bx-cog text-xl"></i>
+                </a>                
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-8">
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold">Events Module</h1>
+                <p class="text-gray-500">Dashboard &gt; Events</p>
+            </header>
+
+            <!-- Stats cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-600">Total Events</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <p class="text-3xl font-bold text-purple-600 mb-1">{{ count.event_count }}</p>
+                    <p class="text-sm text-gray-500">events from the Thapar administration </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-600">Upcoming Events</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <p class="text-3xl font-bold text-purple-600 mb-1">{{ count.upcoming_events_count }}</p>
+                    <p class="text-sm text-gray-500">events planned in future</p>
+                </div>
+                
+            </div>
+
+            <!-- Admin Actions -->
+            <div class="mb-8">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex" aria-label="Tabs">
+                        <button class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm" data-tab="add-book">
+                            Publish Event
+                        </button>
+                        <button class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm" data-tab="check-attendees">
+                            Check attendees
+                        </button>
+                        <button class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm" data-tab="pending-requests">
+                            Delete Events
+                        </button>
+                    </nav>
+                </div>
+                <div class="tab-content active" id="add-book">
+                    <div class="bg-white shadow-md rounded-lg p-6 mt-4">
+                        <h2 class="text-2xl font-bold mb-4">Publish an Event</h2>
+                        <form class="space-y-4" method="post" action="{% url 'events' %}">
+                            {% csrf_token %}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" name="create_event_name" placeholder="Event Name" class="w-full p-2 border rounded" required>
+                                <input type="text" name="create_event_host" placeholder="Hosted By" class="w-full p-2 border rounded" required>
+                            </div>
+                            <input type="datetime-local" name="create_event_date" placeholder="Quantity" class="w-full p-2 border rounded" required>
+                            <input type="textarea" name="create_event_description" placeholder="Event Description" class="w-full p-2 border rounded" required>
+                            
+                            <button type="submit" name="create_event_form" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                             Publish Event
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-content" id="check-attendees">
+                    
+                    <div class="bg-white shadow-md rounded-lg p-6 mt-4">
+                        
+                        <h2 class="text-2xl font-bold mb-4">Check Attendees</h2>
+                        {% for event in delete_event_list %}
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-semibold">{{ event.event_name }}</p>
+                                    <p class="text-sm text-gray-500">Hosted by: {{ event.hosted_by }}</p>
+                                </div>
+                                <div class="space-x-2">
+                                    <button class="bg-green-100 text-green-600 hover:bg-green-200 font-bold py-2 px-4 rounded">Attendees</button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- Add more pending request items here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="pending-requests">
+                    <div class="bg-white shadow-md rounded-lg p-6 mt-4">
+                        <h2 class="text-2xl font-bold mb-4">Delete Events</h2>
+                        <div class="space-y-4">
+                            {% for event in delete_event_list %}
+    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+        <div>
+            <p class="font-semibold">{{ event.event_name }}</p>
+            <p class="text-sm text-gray-500">Hosted by: {{ event.hosted_by }}</p>
+        </div>
+        <div class="space-x-2">
+            <form method="post" action="{% url 'events' %}">
+                {% csrf_token %}
+                <input type="hidden" name="delete_event" value="{{ event.event_name }}">
+                <button type="submit" name="delete_event_form" class="bg-red-100 text-red-600 hover:bg-red-200 font-bold py-2 px-4 rounded">Delete</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+
+                            <!-- Add more pending request items here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Simple tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-button');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(target).classList.add('active');
+                    tabs.forEach(t => t.classList.remove('border-purple-500', 'text-purple-600'));
+                    tab.classList.add('border-purple-500', 'text-purple-600');
+                });
+            });
+            // Activate the first tab by default
+            tabs[0].click();
+        });
+    </script>
+</body>
+</html>

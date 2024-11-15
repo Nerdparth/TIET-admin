@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Module - Smart-Campus Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-16 bg-white shadow-md">
+            <nav class="flex flex-col items-center py-4 space-y-4">
+                <button class="w-12 h-12 rounded-lg hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <a href="{% url 'dashboard' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </a>
+                <a href="{% url 'events' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </a>
+                <a href="{% url 'settings' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <i class="bx bx-cog text-xl"></i>
+                </a>                
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-8">
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold">Maintenance Module</h1>
+                <p class="text-gray-500">Dashboard &gt; Maintenance</p>
+            </header>
+
+            <!-- Toggle for Maintenance Mode -->
+             <form action="{% url 'settings' %}" method="post">
+                {% csrf_token %}
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <label for="maintenance-toggle" class="text-lg font-semibold">Maintenance Mode</label>
+                    {% if maintenance %}
+                    <input type="checkbox" id="maintenance-toggle" name="maintenance" class="toggle-checkbox hidden" checked>
+                    {% else %}
+                    <input type="checkbox" id="maintenance-toggle" name="maintenance" class="toggle-checkbox hidden">
+                    {%  endif %}
+                    <label for="maintenance-toggle" class="toggle-label bg-gray-200 w-14 h-8 rounded-full flex items-center cursor-pointer p-1">
+                        <span class="toggle-dot bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out"></span>
+                    </label>
+                </div>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+
+        <!-- Button linking to the main application -->
+        <div class="mt-8">
+            <a href="#" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                View Smart-Campus
+            </a>
+        </div>
+        </main>
+    </div>
+
+    <style>
+        /* Toggle switch styling */
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #34d399; /* Green color when toggled */
+        }
+    </style>
+</body>
+</html>

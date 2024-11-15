@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Module - Smart-Campus Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .attendee-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .attendee-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 15px;
+            border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+            border-radius: 8px;
+            background-color: #f9fafb; /* Tailwind gray-50 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .attendee-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Elevate on hover */
+        }
+
+        .attendee-name {
+            font-size: 1.25rem; /* Tailwind text-xl */
+            font-weight: 600; /* Tailwind font-semibold */
+            color: #111827; /* Tailwind gray-900 */
+        }
+
+        .attendee-email {
+            font-style: italic;
+            color: #4b5563; /* Tailwind gray-600 */
+        }
+
+        .attendee-semester {
+            font-size: 0.875rem; /* Tailwind text-sm */
+            color: #6b7280; /* Tailwind gray-500 */
+        }
+
+        @media (max-width: 600px) {
+            .attendee-item {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-16 bg-white shadow-md">
+            <nav class="flex flex-col items-center py-4 space-y-4">
+                <!-- Existing sidebar content unchanged -->
+                <button class="w-12 h-12 rounded-lg hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <a href="{% url 'dashboard' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </a>
+                <a href="{% url 'events' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </a>
+                <a href="{% url 'settings' %}" class="w-12 h-12 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                    <i class="bx bx-cog text-xl"></i>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-8">
+            <div class="container mx-auto bg-white p-6 rounded-lg shadow-md">
+                <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Attendees List</h1>
+                <ul class="attendee-list space-y-4">
+                    {% for attendee in attendees %}
+                        <li class="attendee-item">
+                            <p class="attendee-name"><b style="color: blue;">Name:</b> {{ attendee.name }}</p>
+                            <p class="attendee-email">Email: {{ attendee.email }}</p>
+                            <p class="attendee-semester">Semester: {{ attendee.semester }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
